@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Profile | NextPost</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="job-card">
+
+        <img
+        src="assets/logo.png"
+        alt="NextPost Logo"
+        class="logo"
+        style="
+        display:block;
+        margin:auto;
+        margin-bottom:20px;
+        ">
+
+        <h1>Setup Your Profile</h1>
+
+        <p style="
+        color:#64748b;
+        margin-top:10px;
+        margin-bottom:15px;
+        ">
+        Help us show only the opportunities that matter to you.
+        </p>
+
+        <p style="
+        color:#64748b;
+        font-size:14px;
+        margin-bottom:20px;
+        ">
+        Your preferences are stored only on your device.
+        No login required.
+        </p>
+
+        <h3>Select Your Qualification(s)</h3>
+
+        <br>
+
+        <label>
+            <input type="checkbox" value="10th Pass" class="qualification">
+            10th Pass
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="checkbox" value="12th Pass" class="qualification">
+            12th Pass
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="checkbox" value="Graduate" class="qualification">
+            Graduate
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="checkbox" value="BCA" class="qualification">
+            BCA
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="checkbox" value="B.Sc Nursing" class="qualification">
+            B.Sc Nursing
+        </label>
+
+        <br><br><br>
+
+        <button
+        class="view-btn"
+        onclick="saveProfile()">
+
+            Save Preferences
+
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+function saveProfile(){
+
+    const qualifications =
+    [...document.querySelectorAll('.qualification:checked')]
+    .map(item => item.value);
+
+    if(
+        qualifications.length === 0
+    ){
+
+        alert(
+        "Please select at least one qualification."
+        );
+
+        return;
+    }
+
+    localStorage.setItem(
+        "qualifications",
+        JSON.stringify(qualifications)
+    );
+
+    window.location.href =
+    "index.html";
+}
+
+</script>
+
+</body>
+</html>

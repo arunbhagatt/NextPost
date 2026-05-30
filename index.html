@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NextPost</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#3b82f6">
+
+</head>
+
+<body>
+<script>
+
+const qualifications =
+localStorage.getItem("qualifications");
+
+if(
+    !qualifications
+){
+    window.location.href =
+    "preferences.html";
+}
+ 
+</script>
+<div class="container">
+
+    <header>
+
+        <div class="logo-section">
+
+            <img src="assets/logo.png" alt="NextPost Logo" class="logo">
+
+            <div>
+
+                <h1>NextPost</h1>
+
+                <p>Jobs • Exams • Opportunities</p>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <section class="dashboard">
+
+        <div class="dashboard-card green">
+            <h2>🎯 Matches Your Profile</h2>
+            <span id="matchCount">0</span>
+        </div>
+
+        <div class="dashboard-card blue">
+            <h2>🔥 Important This Week</h2>
+            <span id="importantCount">0</span>
+        </div>
+
+        <div class="dashboard-card amber">
+            <h2>⏳ Closing Soon</h2>
+            <span id="closingCount">0</span>
+        </div>
+
+        <div class="dashboard-card purple">
+            <h2>📅 Upcoming Exams</h2>
+            <span id="examCount">0</span>
+        </div>
+
+    </section>
+
+    <section>
+
+       <div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+flex-wrap:wrap;
+gap:10px;
+">
+
+    <div class="section-title">
+        🎯 Recommended Jobs
+    </div>
+
+    <button
+    class="view-btn"
+    onclick="window.location.href='preferences.html'">
+
+        ⚙ Update Preferences
+
+    </button>
+
+</div>
+
+        <div id="jobsContainer">
+
+        </div>
+
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+<script>
+
+if("serviceWorker" in navigator){
+
+    navigator.serviceWorker
+    .register("service-worker.js")
+
+    .then(() => {
+
+        console.log(
+        "Service Worker Registered"
+        );
+
+    });
+
+}
+
+</script>
+</body>
+</html>
