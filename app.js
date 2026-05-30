@@ -1,113 +1,198 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("jobs.json")
-    .then(response => response.json())
-    .then(jobs => {
+fetch("jobs.json")
+.then(response => response.json())
+.then(data => {
 
-        displayJobs(jobs);
-        updateDashboard(jobs);
+    displayJobs(data);
+    updateDashboard(data);
 
-    })
-    .catch(error => {
+})
+.catch(error => {
 
-        console.error("Error loading jobs:", error);
+    console.error("Error loading data:", error);
 
-        document.getElementById("jobsContainer").innerHTML =
-        "<p>Unable to load jobs.</p>";
-
-    });
+    document.getElementById("jobsContainer").innerHTML =
+    "<p>Unable to load data.</p>";
 
 });
 
-function displayJobs(jobs){
+});
 
-    const jobsContainer =
-    document.getElementById("jobsContainer");
+function displayJobs(data){
 
-    jobsContainer.innerHTML = "";
+const jobsContainer =
+document.getElementById("jobsContainer");
 
-    const qualifications =
-    JSON.parse(
-        localStorage.getItem("qualifications")
-    ) || [];
+const admitCardsContainer =
+document.getElementById("admitCardsContainer");
 
-    const filteredJobs =
-    jobs.filter(job => {
+const resultsContainer =
+document.getElementById("resultsContainer");
 
-        return qualifications.some(q =>
-            job.qualifications.includes(q)
-        );
+const answerKeysContainer =
+document.getElementById("answerKeysContainer");
 
-    });
+jobsContainer.innerHTML = "";
+admitCardsContainer.innerHTML = "";
+resultsContainer.innerHTML = "";
+answerKeysContainer.innerHTML = "";
 
-    filteredJobs.forEach(job => {
+const qualifications =
+JSON.parse(
+    localStorage.getItem("qualifications")
+) || [];
 
-        const card =
-        document.createElement("div");
+const jobs =
+data.filter(item =>
+    item.type === "job"
+);
 
-        card.className = "job-card";
+const filteredJobs =
+jobs.filter(job =>
+    qualifications.some(q =>
+        job.qualifications.includes(q)
+    )
+);
 
-        card.innerHTML = `
-            <div class="job-title">
-                ${job.title}
-            </div>
+filteredJobs.forEach(job => {
 
-            <div class="badge">
-                🎯 Matches Your Profile
-            </div>
+    jobsContainer.innerHTML += `
+    <div class="job-card">
 
-            <div class="job-meta">
-                ${job.category}
-            </div>
+        <div class="job-title">
+            ${job.title}
+        </div>
 
-            <div class="job-meta">
-                Qualification:
-                ${job.qualifications.join(", ")}
-            </div>
+        <div class="badge">
+            🎯 Matches Your Profile
+        </div>
 
-            <div class="job-meta">
-                ⏳ ${job.daysLeft} Days Left
-            </div>
+        <div class="job-meta">
+            ${job.organization}
+        </div>
 
-            <button
-                class="view-btn"
-                onclick="viewDetails(${job.id})">
+        <div class="job-meta">
+            Qualification:
+            ${job.qualifications.join(", ")}
+        </div>
 
-                View Details
+        <div class="job-meta">
+            ⏳ ${job.daysLeft} Days Left
+        </div>
 
-            </button>
-        `;
+        <button
+        class="view-btn"
+        onclick="viewDetails(${job.id})">
 
-        jobsContainer.appendChild(card);
+            View Details
 
-    });
+        </button>
 
-    document.getElementById("matchCount").textContent =
-    filteredJobs.length;
+    </div>
+    `;
+
+});
+
+data
+.filter(item =>
+    item.type === "admit-card"
+)
+.forEach(item => {
+
+    admitCardsContainer.innerHTML += `
+    <div class="job-card">
+
+        <div class="job-title">
+            ${item.title}
+        </div>
+
+        <div class="job-meta">
+            ${item.organization}
+        </div>
+
+    </div>
+    `;
+
+});
+
+data
+.filter(item =>
+    item.type === "result"
+)
+.forEach(item => {
+
+    resultsContainer.innerHTML += `
+    <div class="job-card">
+
+        <div class="job-title">
+            ${item.title}
+        </div>
+
+        <div class="job-meta">
+            ${item.organization}
+        </div>
+
+    </div>
+    `;
+
+});
+
+data
+.filter(item =>
+    item.type === "answer-key"
+)
+.forEach(item => {
+
+    answerKeysContainer.innerHTML += `
+    <div class="job-card">
+
+        <div class="job-title">
+            ${item.title}
+        </div>
+
+        <div class="job-meta">
+            ${item.organization}
+        </div>
+
+    </div>
+    `;
+
+});
+
+document.getElementById("matchCount").textContent =
+filteredJobs.length;
 
 }
 
-function updateDashboard(jobs){
+function updateDashboard(data){
 
-    document.getElementById("importantCount").textContent =
-    jobs.filter(job => job.important).length;
+const jobs =
+data.filter(item =>
+    item.type === "job"
+);
 
-    document.getElementById("closingCount").textContent =
-    jobs.filter(job => job.daysLeft <= 7).length;
+document.getElementById("importantCount").textContent =
+jobs.filter(job =>
+job.important).length;
 
-    document.getElementById("examCount").textContent =
-    jobs.filter(job => job.exam).length;
+document.getElementById("closingCount").textContent =
+jobs.filter(job =>
+job.daysLeft <= 7).length;
+
+document.getElementById("examCount").textContent =
+jobs.length;
 
 }
 
 function viewDetails(id){
 
-    localStorage.setItem(
-        "selectedJob",
-        id
-    );
+localStorage.setItem(
+    "selectedJob",
+    id
+);
 
-    window.location.href =
-    "job.html";
+window.location.href =
+"job.html";
 
 }
