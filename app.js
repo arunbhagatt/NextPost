@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-
+let allData = [];
 fetch("jobs.json")
 .then(response => response.json())
 .then(data => {
 
-    displayJobs(data);
-    updateDashboard(data);
+
+window.allData = data;
+
+displayJobs(data);
+updateDashboard(data);
+
 
 })
+
 .catch(error => {
 
     console.error("Error loading data:", error);
@@ -196,3 +201,35 @@ window.location.href =
 "job.html";
 
 }
+document.addEventListener("input", (e) => {
+
+
+if(e.target.id !== "searchBox") return;
+
+const search =
+e.target.value.toLowerCase();
+
+const filtered =
+window.allData.filter(item => {
+
+    return (
+        item.title &&
+        item.title.toLowerCase().includes(search)
+    ) ||
+
+    (
+        item.organization &&
+        item.organization.toLowerCase().includes(search)
+    ) ||
+
+    (
+        item.category &&
+        item.category.toLowerCase().includes(search)
+    );
+
+});
+
+displayJobs(filtered);
+
+
+});
