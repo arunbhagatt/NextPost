@@ -203,33 +203,30 @@ window.location.href =
 }
 document.addEventListener("input", (e) => {
 
-
 if(e.target.id !== "searchBox") return;
 
 const search =
 e.target.value.toLowerCase();
 
-const filtered =
-window.allData.filter(item => {
+const cards =
+document.querySelectorAll(".job-card");
 
-    return (
-        item.title &&
-        item.title.toLowerCase().includes(search)
-    ) ||
+cards.forEach(card => {
 
-    (
-        item.organization &&
-        item.organization.toLowerCase().includes(search)
-    ) ||
+    const text =
+    card.textContent.toLowerCase();
 
-    (
-        item.category &&
-        item.category.toLowerCase().includes(search)
-    );
+    if(text.includes(search)){
+
+        card.style.display = "block";
+
+    } else {
+
+        card.style.display = "none";
+
+    }
 
 });
-
-window.location.reload();
 
 
 });
