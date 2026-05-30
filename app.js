@@ -35,7 +35,7 @@ function displayJobs(jobs){
     jobs.filter(job => {
 
         return qualifications.some(q =>
-            job.qualification.includes(q)
+            job.qualifications.includes(q)
         );
 
     });
@@ -62,7 +62,7 @@ function displayJobs(jobs){
 
             <div class="job-meta">
                 Qualification:
-                ${job.qualification.join(", ")}
+                ${job.qualifications.join(", ")}
             </div>
 
             <div class="job-meta">
