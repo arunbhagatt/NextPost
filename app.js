@@ -229,7 +229,7 @@ window.allData.filter(item => {
 
 });
 
-displayJobs(filtered);
+window.location.reload();
 
 
 });
